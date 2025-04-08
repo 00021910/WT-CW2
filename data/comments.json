@@ -1,1 +1,110 @@
-[]
+[
+  {
+    "id": "123456789",
+    "content": "I completely agree! I bought the same phone last month and the camera quality is incredible.",
+    "reviewId": "123456789",
+    "userId": "234567890",
+    "username": "janedoe",
+    "createdAt": "2025-04-11T10:15:00.000Z",
+    "updatedAt": "2025-04-11T10:15:00.000Z"
+  },
+  {
+    "id": "234567890",
+    "content": "How's the battery life holding up after a month of use?",
+    "reviewId": "123456789",
+    "userId": "345678901",
+    "username": "bobsmith",
+    "createdAt": "2025-04-11T14:30:00.000Z",
+    "updatedAt": "2025-04-11T14:30:00.000Z"
+  },
+  {
+    "id": "345678901",
+    "content": "Still excellent! I can go almost two days with moderate use.",
+    "reviewId": "123456789",
+    "userId": "123456789",
+    "username": "johndoe",
+    "createdAt": "2025-04-11T15:45:00.000Z",
+    "updatedAt": "2025-04-11T15:45:00.000Z"
+  },
+  {
+    "id": "456789012",
+    "content": "I had the same experience with this coffee maker. Such a waste of money!",
+    "reviewId": "234567890",
+    "userId": "567890123",
+    "username": "mikebrown",
+    "createdAt": "2025-04-13T09:20:00.000Z",
+    "updatedAt": "2025-04-13T09:20:00.000Z"
+  },
+  {
+    "id": "567890123",
+    "content": "Have you tried contacting customer service? They replaced mine when I had issues.",
+    "reviewId": "234567890",
+    "userId": "789012345",
+    "username": "davidjones",
+    "createdAt": "2025-04-13T11:10:00.000Z",
+    "updatedAt": "2025-04-13T11:10:00.000Z"
+  },
+  {
+    "id": "678901234",
+    "content": "What size did you get? I'm considering buying these but not sure about sizing.",
+    "reviewId": "345678901",
+    "userId": "456789012",
+    "username": "alicegreen",
+    "createdAt": "2025-04-16T13:25:00.000Z",
+    "updatedAt": "2025-04-16T13:25:00.000Z"
+  },
+  {
+    "id": "789012345",
+    "content": "I went true to size and they fit perfectly. They do have a bit of a break-in period though.",
+    "reviewId": "345678901",
+    "userId": "345678901",
+    "username": "bobsmith",
+    "createdAt": "2025-04-16T14:40:00.000Z",
+    "updatedAt": "2025-04-16T14:40:00.000Z"
+  },
+  {
+    "id": "890123456",
+    "content": "I had a similar experience at this restaurant. The food is just okay for the price.",
+    "reviewId": "456789012",
+    "userId": "678901234",
+    "username": "sarahwilson",
+    "createdAt": "2025-04-19T12:15:00.000Z",
+    "updatedAt": "2025-04-19T12:15:00.000Z"
+  },
+  {
+    "id": "901234567",
+    "content": "Did you try their pasta? That's supposed to be their specialty.",
+    "reviewId": "456789012",
+    "userId": "901234567",
+    "username": "ryanmiller",
+    "createdAt": "2025-04-19T16:30:00.000Z",
+    "updatedAt": "2025-04-19T16:30:00.000Z"
+  },
+  {
+    "id": "012345678",
+    "content": "Yes, I had the fettuccine alfredo. It was decent but nothing special.",
+    "reviewId": "456789012",
+    "userId": "456789012",
+    "username": "alicegreen",
+    "createdAt": "2025-04-19T17:45:00.000Z",
+    "updatedAt": "2025-04-19T17:45:00.000Z"
+  },
+  {
+    "id": "261931296",
+    "content": "bruh",
+    "reviewId": "345678901",
+    "userId": "125043598",
+    "username": "a_zeez",
+    "createdAt": "2025-04-08T18:15:10.284Z",
+    "updatedAt": "2025-04-08T18:15:10.285Z"
+  },
+  {
+    "id": "270407369",
+    "content": "come on",
+    "reviewId": "345678901",
+    "userId": "125043598",
+    "username": "a_zeez",
+    "createdAt": "2025-04-08T18:15:12.568Z",
+    "updatedAt": "2025-04-08T18:15:12.570Z"
+  }
+]

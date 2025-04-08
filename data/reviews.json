@@ -1,1 +1,122 @@
-[]
+[
+  {
+    "id": "123456789",
+    "title": "Amazing Smartphone Experience",
+    "content": "I've been using this smartphone for a month now and I'm extremely impressed with its performance. The camera quality is outstanding, battery life is excellent, and the user interface is intuitive. Highly recommend for anyone looking for a high-end smartphone!",
+    "productName": "Galaxy S23 Ultra",
+    "category": "Electronics",
+    "rating": 5,
+    "userId": "123456789",
+    "username": "johndoe",
+    "createdAt": "2025-04-10T09:30:00.000Z",
+    "updatedAt": "2025-04-10T09:30:00.000Z"
+  },
+  {
+    "id": "234567890",
+    "title": "Disappointing Coffee Maker",
+    "content": "I was excited to try this coffee maker, but it's been a letdown. It's noisy, takes too long to brew, and the coffee doesn't taste as good as advertised. The design looks nice, but functionality is what matters most.",
+    "productName": "BrewMaster 3000",
+    "category": "Kitchen Appliances",
+    "rating": 2,
+    "userId": "234567890",
+    "username": "janedoe",
+    "createdAt": "2025-04-12T14:15:00.000Z",
+    "updatedAt": "2025-04-12T14:15:00.000Z"
+  },
+  {
+    "id": "345678901",
+    "title": "Perfect Running Shoes",
+    "content": "These running shoes are a game-changer! They provide excellent support, are lightweight, and the cushioning is just right. I've run several marathons in them and haven't experienced any discomfort. Highly recommend for serious runners!",
+    "productName": "UltraBoost Pro",
+    "category": "Footwear",
+    "rating": 5,
+    "userId": "345678901",
+    "username": "bobsmith",
+    "createdAt": "2025-04-15T11:45:00.000Z",
+    "updatedAt": "2025-04-15T11:45:00.000Z"
+  },
+  {
+    "id": "456789012",
+    "title": "Mediocre Restaurant Experience",
+    "content": "The ambiance was nice, but the food was just average. Service was slow despite the restaurant not being very busy. Prices were a bit high for the quality of food served. Might give it another try in the future, but not in a hurry to return.",
+    "productName": "Bella Italia Restaurant",
+    "category": "Restaurants",
+    "rating": 3,
+    "userId": "456789012",
+    "username": "alicegreen",
+    "createdAt": "2025-04-18T19:20:00.000Z",
+    "updatedAt": "2025-04-18T19:20:00.000Z"
+  },
+  {
+    "id": "567890123",
+    "title": "Excellent Vacuum Cleaner",
+    "content": "This vacuum cleaner has transformed my cleaning routine. It's powerful, easy to maneuver, and picks up pet hair like nothing else I've tried. The battery life is impressive, and it's not too loud. Worth every penny!",
+    "productName": "DustBuster Pro",
+    "category": "Home Appliances",
+    "rating": 5,
+    "userId": "567890123",
+    "username": "mikebrown",
+    "createdAt": "2025-04-20T10:10:00.000Z",
+    "updatedAt": "2025-04-20T10:10:00.000Z"
+  },
+  {
+    "id": "678901234",
+    "title": "Terrible Hotel Stay",
+    "content": "I had a horrible experience at this hotel. The room was dirty, the staff was rude, and the noise from the street kept me up all night. The breakfast was cold and unappetizing. Would not recommend to anyone and definitely won't be returning.",
+    "productName": "Grand Plaza Hotel",
+    "category": "Hotels",
+    "rating": 1,
+    "userId": "678901234",
+    "username": "sarahwilson",
+    "createdAt": "2025-04-22T16:30:00.000Z",
+    "updatedAt": "2025-04-22T16:30:00.000Z"
+  },
+  {
+    "id": "789012345",
+    "title": "Great Value Laptop",
+    "content": "This laptop offers excellent performance for the price. It handles multitasking well, has a decent battery life, and the display is crisp. It's not the most powerful machine out there, but for everyday use and light gaming, it's perfect.",
+    "productName": "TechBook Pro",
+    "category": "Electronics",
+    "rating": 4,
+    "userId": "789012345",
+    "username": "davidjones",
+    "createdAt": "2025-04-25T13:45:00.000Z",
+    "updatedAt": "2025-04-25T13:45:00.000Z"
+  },
+  {
+    "id": "890123456",
+    "title": "Disappointing Movie Experience",
+    "content": "I had high expectations for this movie based on the trailers, but it was a letdown. The plot was predictable, the acting was mediocre, and the special effects weren't as impressive as advertised. Save your money and wait for it to stream.",
+    "productName": "Galactic Warriors 3",
+    "category": "Entertainment",
+    "rating": 2,
+    "userId": "890123456",
+    "username": "emilyclark",
+    "createdAt": "2025-04-28T20:15:00.000Z",
+    "updatedAt": "2025-04-28T20:15:00.000Z"
+  },
+  {
+    "id": "901234567",
+    "title": "Life-Changing Book",
+    "content": "This book has completely changed my perspective on life. The author's insights are profound, and the writing style is engaging. I've recommended it to all my friends and family. It's the kind of book you'll want to read multiple times.",
+    "productName": "The Path Forward",
+    "category": "Books",
+    "rating": 5,
+    "userId": "901234567",
+    "username": "ryanmiller",
+    "createdAt": "2025-04-30T08:50:00.000Z",
+    "updatedAt": "2025-04-30T08:50:00.000Z"
+  },
+  {
+    "id": "012345678",
+    "title": "Average Fitness Tracker",
+    "content": "This fitness tracker does the basics well - step counting, heart rate monitoring, and sleep tracking. However, the app is a bit clunky, and the battery life is shorter than advertised. It's good for beginners, but fitness enthusiasts might want something more advanced.",
+    "productName": "FitBand X1",
+    "category": "Fitness",
+    "rating": 3,
+    "userId": "012345678",
+    "username": "oliviawhite",
+    "createdAt": "2025-05-02T15:25:00.000Z",
+    "updatedAt": "2025-05-02T15:25:00.000Z"
+  }
+]

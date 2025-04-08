@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= review.title %> - IMO</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h1 class="card-title"><%= review.title %></h1>
+            <h5 class="card-subtitle mb-2 text-muted"><%= review.productName %> - <%= review.category %></h5>
+            <div class="mb-3">
+              <% for (let i = 1; i <= 5; i++) { %>
+                <% if (i <= review.rating) { %>
+                  <span class="text-warning fs-4">★</span>
+                <% } else { %>
+                  <span class="text-secondary fs-4">★</span>
+                <% } %>
+              <% } %>
+            </div>
+            <p class="card-text"><%= review.content %></p>
+            <div class="d-flex justify-content-between align-items-center">
+              <small class="text-muted">By <%= review.username %> on <%= new Date(review.createdAt).toLocaleDateString() %></small>
+              <% if (user && user.id === review.userId) { %>
+                <div>
+                  <a href="/edit-review/<%= review.id %>" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+                  <button class="btn btn-sm btn-outline-danger" onclick="deleteReview('<%= review.id %>')">Delete</button>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="mb-3">Comments</h3>
+        
+        <% if (user) { %>
+          <div class="card mb-4">
+            <div class="card-body">
+              <form id="comment-form">
+                <div class="mb-3">
+                  <label for="comment" class="form-label">Add a comment</label>
+                  <textarea class="form-control" id="comment" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
+        <% } else { %>
+          <div class="alert alert-info mb-4">
+            <a href="/login">Login</a> or <a href="/signup">Sign up</a> to leave a comment.
+          </div>
+        <% } %>
+
+        <div id="comments-container">
+          <% if (comments && comments.length > 0) { %>
+            <% comments.forEach(comment => { %>
+              <div class="card mb-3" id="comment-<%= comment.id %>">
+                <div class="card-body">
+                  <p class="card-text"><%= comment.content %></p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">By <%= comment.username %> on <%= new Date(comment.createdAt).toLocaleDateString() %></small>
+                    <% if (user && user.id === comment.userId) { %>
+                      <div>
+                        <button class="btn btn-sm btn-outline-primary me-2" onclick="editComment('<%= comment.id %>')">Edit</button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteComment('<%= comment.id %>')">Delete</button>
+                      </div>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <p>No comments yet. Be the first to share your thoughts!</p>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5>More from this category</h5>
+          </div>
+          <ul class="list-group list-group-flush" id="related-reviews">
+            <!-- Will be populated by JavaScript -->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const reviewId = '<%= review.id %>';
+    const category = '<%= review.category %>';
+    
+    // Fetch related reviews
+    fetch(`/api/reviews?category=${category}`)
+      .then(response => response.json())
+      .then(reviews => {
+        const relatedReviews = reviews.filter(r => r.id !== reviewId).slice(0, 5);
+        const container = document.getElementById('related-reviews');
+        
+        if (relatedReviews.length > 0) {
+          relatedReviews.forEach(review => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item';
+            li.innerHTML = `
+              <a href="/reviews/${review.id}" class="text-decoration-none">
+                <div>${review.title}</div>
+                <div class="small text-muted">
+                  ${Array(5).fill().map((_, i) => i < review.rating ? '★' : '☆').join('')}
+                </div>
+              </a>
+            `;
+            container.appendChild(li);
+          });
+        } else {
+          const li = document.createElement('li');
+          li.className = 'list-group-item';
+          li.textContent = 'No related reviews found.';
+          container.appendChild(li);
+        }
+      });
+    
+    <% if (user) { %>
+      // Add comment
+      document.getElementById('comment-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const content = document.getElementById('comment').value;
+        
+        fetch('/api/comments', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            content,
+            reviewId
+          }),
+        })
+        .then(response => response.json())
+        .then(comment => {
+          document.getElementById('comment').value = '';
+          
+          // Add new comment to the page
+          const commentsContainer = document.getElementById('comments-container');
+          const commentElement = document.createElement('div');
+          commentElement.className = 'card mb-3';
+          commentElement.id = `comment-${comment.id}`;
+          commentElement.innerHTML = `
+            <div class="card-body">
+              <p class="card-text">${comment.content}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">By ${comment.username} on ${new Date(comment.createdAt).toLocaleDateString()}</small>
+                <div>
+                  <button class="btn btn-sm btn-outline-primary me-2" onclick="editComment('${comment.id}')">Edit</button>
+                  <button class="btn btn-sm btn-outline-danger" onclick="deleteComment('${comment.id}')">Delete</button>
+                </div>
+              </div>
+            </div>
+          `;
+          
+          if (commentsContainer.querySelector('p')?.textContent === 'No comments yet. Be the first to share your thoughts!') {
+            commentsContainer.innerHTML = '';
+          }
+          
+          commentsContainer.prepend(commentElement);
+        });
+      });
+      
+      // Edit comment
+      function editComment(commentId) {
+        const commentElement = document.getElementById(`comment-${commentId}`);
+        const commentText = commentElement.querySelector('.card-text').textContent;
+        
+        commentElement.querySelector('.card-body').innerHTML = `
+          <form id="edit-comment-form-${commentId}">
+            <div class="mb-3">
+              <textarea class="form-control" id="edit-comment-${commentId}" rows="3" required>${commentText}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary me-2">Save</button>
+            <button type="button" class="btn btn-secondary" onclick="cancelEdit('${commentId}', '${commentText}')">Cancel</button>
+          </form>
+        `;
+        
+        document.getElementById(`edit-comment-form-${commentId}`).addEventListener('submit', function(e) {
+          e.preventDefault();
+          const content = document.getElementById(`edit-comment-${commentId}`).value;
+          
+          fetch(`/api/comments/${commentId}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ content }),
+          })
+          .then(response => response.json())
+          .then(comment => {
+            location.reload();
+          });
+        });
+      }
+      
+      // Cancel edit
+      function cancelEdit(commentId, originalText) {
+        location.reload();
+      }
+      
+      // Delete comment
+      function deleteComment(commentId) {
+        if (confirm('Are you sure you want to delete this comment?')) {
+          fetch(`/api/comments/${commentId}`, {
+            method: 'DELETE',
+          })
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById(`comment-${commentId}`).remove();
+            
+            const commentsContainer = document.getElementById('comments-container');
+            if (commentsContainer.children.length === 0) {
+              commentsContainer.innerHTML = '<p>No comments yet. Be the first to share your thoughts!</p>';
+            }
+          });
+        }
+      }
+      
+      // Delete review
+      function deleteReview(reviewId) {
+        if (confirm('Are you sure you want to delete this review? This action cannot be undone.')) {
+          fetch(`/api/reviews/${reviewId}`, {
+            method: 'DELETE',
+          })
+          .then(response => response.json())
+          .then(data => {
+            window.location.href = '/';
+          });
+        }
+      }
+    <% } %>
+  </script>
+</body>
+</html>

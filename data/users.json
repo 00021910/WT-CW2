@@ -1,1 +1,79 @@
-[]
+[
+  {
+    "id": "123456789",
+    "username": "johndoe",
+    "email": "john@example.com",
+    "password": "$2a$10$XQnXEP1SHNGnQKIUy5rJEOQ9HQXpG4qZdAoB/xwwXMhzCUhAZfTIK",
+    "createdAt": "2025-01-15T08:30:00.000Z"
+  },
+  {
+    "id": "234567890",
+    "username": "janedoe",
+    "email": "jane@example.com",
+    "password": "$2a$10$XQnXEP1SHNGnQKIUy5rJEOQ9HQXpG4qZdAoB/xwwXMhzCUhAZfTIK",
+    "createdAt": "2025-01-20T10:15:00.000Z"
+  },
+  {
+    "id": "345678901",
+    "username": "bobsmith",
+    "email": "bob@example.com",
+    "password": "$2a$10$XQnXEP1SHNGnQKIUy5rJEOQ9HQXpG4qZdAoB/xwwXMhzCUhAZfTIK",
+    "createdAt": "2025-02-05T14:45:00.000Z"
+  },
+  {
+    "id": "456789012",
+    "username": "alicegreen",
+    "email": "alice@example.com",
+    "password": "$2a$10$XQnXEP1SHNGnQKIUy5rJEOQ9HQXpG4qZdAoB/xwwXMhzCUhAZfTIK",
+    "createdAt": "2025-02-10T09:20:00.000Z"
+  },
+  {
+    "id": "567890123",
+    "username": "mikebrown",
+    "email": "mike@example.com",
+    "password": "$2a$10$XQnXEP1SHNGnQKIUy5rJEOQ9HQXpG4qZdAoB/xwwXMhzCUhAZfTIK",
+    "createdAt": "2025-02-15T16:30:00.000Z"
+  },
+  {
+    "id": "678901234",
+    "username": "sarahwilson",
+    "email": "sarah@example.com",
+    "password": "$2a$10$XQnXEP1SHNGnQKIUy5rJEOQ9HQXpG4qZdAoB/xwwXMhzCUhAZfTIK",
+    "createdAt": "2025-03-01T11:10:00.000Z"
+  },
+  {
+    "id": "789012345",
+    "username": "davidjones",
+    "email": "david@example.com",
+    "password": "$2a$10$XQnXEP1SHNGnQKIUy5rJEOQ9HQXpG4qZdAoB/xwwXMhzCUhAZfTIK",
+    "createdAt": "2025-03-10T13:25:00.000Z"
+  },
+  {
+    "id": "890123456",
+    "username": "emilyclark",
+    "email": "emily@example.com",
+    "password": "$2a$10$XQnXEP1SHNGnQKIUy5rJEOQ9HQXpG4qZdAoB/xwwXMhzCUhAZfTIK",
+    "createdAt": "2025-03-15T15:40:00.000Z"
+  },
+  {
+    "id": "901234567",
+    "username": "ryanmiller",
+    "email": "ryan@example.com",
+    "password": "$2a$10$XQnXEP1SHNGnQKIUy5rJEOQ9HQXpG4qZdAoB/xwwXMhzCUhAZfTIK",
+    "createdAt": "2025-03-20T17:55:00.000Z"
+  },
+  {
+    "id": "012345678",
+    "username": "oliviawhite",
+    "email": "olivia@example.com",
+    "password": "$2a$10$XQnXEP1SHNGnQKIUy5rJEOQ9HQXpG4qZdAoB/xwwXMhzCUhAZfTIK",
+    "createdAt": "2025-03-25T12:15:00.000Z"
+  },
+  {
+    "id": "125043598",
+    "username": "a_zeez",
+    "email": "azizbekmasharibov@gmail.com",
+    "password": "$2b$10$Wkq1GuDGUBKImUn9tQ9jcOXERydIenaSPTs.5eZ8dRqaqcQ3vIOMK",
+    "createdAt": "2025-04-08T15:39:35.985Z"
+  }
+]

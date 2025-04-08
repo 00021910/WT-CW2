@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - IMO</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <div class="mb-3">
+              <div class="d-inline-block rounded-circle bg-primary text-white p-3" style="width: 80px; height: 80px; font-size: 2rem;">
+                <%= user.username.charAt(0).toUpperCase() %>
+              </div>
+            </div>
+            <h3><%= user.username %></h3>
+            <p class="text-muted"><%= user.email %></p>
+            <p class="text-muted">Member since <%= new Date(user.createdAt).toLocaleDateString() %></p>
+            <a href="/create-review" class="btn btn-primary">Write a Review</a>
+            <hr/>
+            <a href="/logout" class="btn btn-danger">Log out</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-8">
+        <ul class="nav nav-tabs mb-4" id="profileTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="true">My Reviews</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">My Comments</button>
+          </li>
+        </ul>
+        
+        <div class="tab-content" id="profileTabsContent">
+          <div class="tab-pane fade show active" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+            <% if (reviews && reviews.length > 0) { %>
+              <% reviews.forEach(review => { %>
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <h5 class="card-title mb-0"><%= review.title %></h5>
+                      <div>
+                        <% for (let i = 1; i <= 5; i++) { %>
+                          <% if (i <= review.rating) { %>
+                            <span class="text-warning">★</span>
+                          <% } else { %>
+                            <span class="text-secondary">★</span>
+                          <% } %>
+                        <% } %>
+                      </div>
+                    </div>
+                    <h6 class="card-subtitle mb-2 text-muted"><%= review.productName %> - <%= review.category %></h6>
+                    <p class="card-text"><%= review.content.substring(0, 150) %>...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <small class="text-muted"><%= new Date(review.createdAt).toLocaleDateString() %></small>
+                      <div>
+                        <a href="/edit-review/<%= review.id %>" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+                        <a href="/reviews/<%= review.id %>" class="btn btn-sm btn-outline-secondary me-2">View</a>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteReview('<%= review.id %>')">Delete</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% }) %>
+            <% } else { %>
+              <div class="alert alert-info">
+                You haven't written any reviews yet. <a href="/create-review">Write your first review</a>!
+              </div>
+            <% } %>
+          </div>
+          
+          <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+            <% if (comments && comments.length > 0) { %>
+              <% comments.forEach(comment => { %>
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <p class="card-text"><%= comment.content %></p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <small class="text-muted"><%= new Date(comment.createdAt).toLocaleDateString() %></small>
+                      <a href="/reviews/<%= comment.reviewId %>" class="btn btn-sm btn-outline-secondary">View Review</a>
+                    </div>
+                  </div>
+                </div>
+              <% }) %>
+            <% } else { %>
+              <div class="alert alert-info">
+                You haven't made any comments yet.
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
+
+  <script>
+    function deleteReview(reviewId) {
+      // extra verification
+      if (confirm("Are you sure you want to delete this review?")) {
+        fetch(`/api/reviews/${reviewId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest', // ajax specific
+          },
+        })
+        .then(response => {
+          if (response.ok) {
+            // updating dom
+            window.location.reload();
+          } else {
+            alert("Error deleting the review");
+          }
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("Something went wrong!");
+        });
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
