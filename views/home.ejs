@@ -13,15 +13,15 @@
   <div class="container mt-5">
     <div class="row mb-4">
       <div class="col-md-8">
-        <h1>Welcome to IMO</h1>
-        <p class="lead">Share your honest opinions and discover what others think.</p>
+        <h1><%= __('home.welcome') %></h1>
+        <p class="lead"><%= __('home.lead') %></p>
       </div>
       <div class="col-md-4 text-end">
         <% if (user) { %>
-          <a href="/create-review" class="btn btn-primary">Leave a Review</a>
+          <a href="/create-review" class="btn btn-primary"><%= __('home.leave_review') %></a>
         <% } else { %>
-          <a href="/login" class="btn btn-outline-primary me-2">Login</a>
-          <a href="/signup" class="btn btn-primary">Sign Up</a>
+          <a href="/login" class="btn btn-outline-primary me-2"><%= __('home.login') %></a>
+          <a href="/signup" class="btn btn-primary"><%= __('home.signup') %></a>
         <% } %>
       </div>
     </div>
@@ -29,13 +29,13 @@
     <div class="row mb-4">
       <div class="col-12">
         <form action="/search" method="GET" class="d-flex">
-          <input type="text" name="q" class="form-control me-2" placeholder="Search for products, places, or reviews...">
-          <button type="submit" class="btn btn-primary">Search</button>
+          <input type="text" name="q" class="form-control me-2" placeholder="<%= __('home.search_placeholder') %>">
+          <button type="submit" class="btn btn-primary"><%= __('home.search') %></button>
         </form>
       </div>
     </div>
 
-    <h2 class="mb-4">Popular Reviews</h2>
+    <h2 class="mb-4"><%= __('home.popular_reviews') %></h2>
     
     <div class="row">
       <% if (popularReviews && popularReviews.length > 0) { %>
@@ -57,7 +57,7 @@
                 <p class="card-text"><%= review.content.substring(0, 150) %>...</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <small class="text-muted">By <%= review.username %></small>
-                  <a href="/reviews/<%= review.id %>" class="btn btn-sm btn-outline-primary">Read More</a>
+                  <a href="/reviews/<%= review.id %>" class="btn btn-sm btn-outline-primary"><%= __('home.read_more') %></a>
                 </div>
               </div>
               <div class="card-footer text-muted">
@@ -68,7 +68,7 @@
         <% }) %>
       <% } else { %>
         <div class="col-12">
-          <p>No reviews available yet. Be the first to share your opinion!</p>
+          <p><%= __('home.no_reviews') %></p>
         </div>
       <% } %>
     </div>

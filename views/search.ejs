@@ -9,20 +9,23 @@
 </head>
 <body>
   <%- include('partials/navbar') %>
+  <div class="container mt-3">
+    <button class="btn btn-outline-secondary mb-3" onclick="window.history.length > 1 ? window.history.back() : window.location.href='/'">← Back</button>
+  </div>
 
   <div class="container mt-5">
-    <h1 class="mb-4">Search Results</h1>
+    <h1 class="mb-4"><%= __('search.title') %></h1>
     
     <div class="row mb-4">
       <div class="col-12">
         <form action="/search" method="GET" class="card p-3">
           <div class="row g-3">
             <div class="col-md-6">
-              <input type="text" name="q" class="form-control" placeholder="Search for products, places, or reviews..." value="<%= query.q || '' %>">
+              <input type="text" name="q" class="form-control" placeholder="<%= __('home.search_placeholder') %>" value="<%= query.q || '' %>">
             </div>
             <div class="col-md-2">
               <select name="category" class="form-select">
-                <option value="">All Categories</option>
+                <option value=""><%= __('search.all_categories') %></option>
                 <% if (categories && categories.length > 0) { %>
                   <% categories.forEach(category => { %>
                     <option value="<%= category %>" <%= query.category === category ? 'selected' : '' %>><%= category %></option>
@@ -32,25 +35,36 @@
             </div>
             <div class="col-md-2">
               <select name="rating" class="form-select">
-                <option value="">All Ratings</option>
-                <option value="5" <%= query.rating === '5' ? 'selected' : '' %>>5 Stars</option>
-                <option value="4" <%= query.rating === '4' ? 'selected' : '' %>>4 Stars</option>
-                <option value="3" <%= query.rating === '3' ? 'selected' : '' %>>3 Stars</option>
-                <option value="2" <%= query.rating === '2' ? 'selected' : '' %>>2 Stars</option>
-                <option value="1" <%= query.rating === '1' ? 'selected' : '' %>>1 Star</option>
+                <option value=""><%= __('search.all_ratings') %></option>
+                <option value="5" <%= query.rating === '5' ? 'selected' : '' %>><%= __('search.5_stars') %></option>
+                <option value="4" <%= query.rating === '4' ? 'selected' : '' %>><%= __('search.4_stars') %></option>
+                <option value="3" <%= query.rating === '3' ? 'selected' : '' %>><%= __('search.3_stars') %></option>
+                <option value="2" <%= query.rating === '2' ? 'selected' : '' %>><%= __('search.2_stars') %></option>
+                <option value="1" <%= query.rating === '1' ? 'selected' : '' %>><%= __('search.1_star') %></option>
               </select>
             </div>
             <div class="col-md-2">
               <select name="sentiment" class="form-select">
-                <option value="">All Sentiments</option>
-                <option value="positive" <%= query.sentiment === 'positive' ? 'selected' : '' %>>Positive</option>
-                <option value="neutral" <%= query.sentiment === 'neutral' ? 'selected' : '' %>>Neutral</option>
-                <option value="negative" <%= query.sentiment === 'negative' ? 'selected' : '' %>>Negative</option>
+                <option value=""><%= __('search.all_sentiments') %></option>
+                <option value="positive" <%= query.sentiment === 'positive' ? 'selected' : '' %>><%= __('search.positive') %></option>
+                <option value="neutral" <%= query.sentiment === 'neutral' ? 'selected' : '' %>><%= __('search.neutral') %></option>
+                <option value="negative" <%= query.sentiment === 'negative' ? 'selected' : '' %>><%= __('search.negative') %></option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <select name="language" class="form-select">
+                <option value=""><%= __('search.all_languages') %></option>
+                <option value="Uzbek" <%= query.language === 'Uzbek' ? 'selected' : '' %>><%= __('search.uzbek') %></option>
+                <option value="English" <%= query.language === 'English' ? 'selected' : '' %>><%= __('search.english') %></option>
+                <option value="Russian" <%= query.language === 'Russian' ? 'selected' : '' %>><%= __('search.russian') %></option>
+                <option value="Kazakh" <%= query.language === 'Kazakh' ? 'selected' : '' %>><%= __('search.kazakh') %></option>
+                <option value="Tadjik" <%= query.language === 'Tadjik' ? 'selected' : '' %>><%= __('search.tadjik') %></option>
+                <option value="Turkish" <%= query.language === 'Turkish' ? 'selected' : '' %>><%= __('search.turkish') %></option>
               </select>
             </div>
             <div class="col-12">
-              <button type="submit" class="btn btn-primary">Search</button>
-              <a href="/search" class="btn btn-outline-secondary ms-2">Clear Filters</a>
+              <button type="submit" class="btn btn-primary"><%= __('home.search') %></button>
+              <a href="/search" class="btn btn-outline-secondary ms-2"><%= __('search.clear_filters') %></a>
             </div>
           </div>
         </form>
@@ -89,7 +103,7 @@
       <% } else { %>
         <div class="col-12">
           <div class="alert alert-info">
-            No reviews found matching your search criteria. Try adjusting your filters or search terms.
+            <%= __('search.no_results') %>
           </div>
         </div>
       <% } %>

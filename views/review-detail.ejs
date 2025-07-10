@@ -6,9 +6,28 @@
   <title><%= review.title %> - IMO</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 12px; box-shadow: 0 0 20px #000; }
+    .lightbox-close {
+      position: absolute; top: 30px; right: 40px; color: #fff; font-size: 2.5rem; cursor: pointer; z-index: 10000;
+    }
+  </style>
 </head>
 <body>
   <%- include('partials/navbar') %>
+  <div class="container mt-3">
+    <button class="btn btn-outline-secondary mb-3" onclick="window.history.length > 1 ? window.history.back() : window.location.href='/'">← Back</button>
+  </div>
 
   <div class="container mt-5">
     <div class="row">
@@ -16,6 +35,9 @@
         <div class="card mb-4">
           <div class="card-body">
             <h1 class="card-title"><%= review.title %></h1>
+            <% if (review.language) { %>
+              <div class="text-secondary small mb-2">#<%= review.language %></div>
+            <% } %>
             <h5 class="card-subtitle mb-2 text-muted"><%= review.productName %> - <%= review.category %></h5>
             <div class="mb-3">
               <% for (let i = 1; i <= 5; i++) { %>
@@ -26,36 +48,45 @@
                 <% } %>
               <% } %>
             </div>
+            <div class="mb-3">
+              <% if (review.images && review.images.length > 0) { %>
+                <div class="d-flex gap-2" id="review-images">
+                  <% review.images.forEach(function(img) { %>
+                    <img src="<%= img %>" class="review-img-thumb" style="width:100px;height:100px;object-fit:cover;border-radius:8px;cursor:pointer;border:1px solid #ccc;" onclick="openLightbox('<%= img %>')">
+                  <% }); %>
+                </div>
+              <% } %>
+            </div>
             <p class="card-text"><%= review.content %></p>
             <div class="d-flex justify-content-between align-items-center">
               <small class="text-muted">By <%= review.username %> on <%= new Date(review.createdAt).toLocaleDateString() %></small>
-              <% if (user && user.id === review.userId) { %>
+              <% if (user && (user.id === review.userId || user.role === 'Admin')) { %>
                 <div>
-                  <a href="/edit-review/<%= review.id %>" class="btn btn-sm btn-outline-primary me-2">Edit</a>
-                  <button class="btn btn-sm btn-outline-danger" onclick="deleteReview('<%= review.id %>')">Delete</button>
+                  <a href="/edit-review/<%= review.id %>" class="btn btn-sm btn-outline-primary me-2"><%= __('review_detail.edit') %></a>
+                  <button class="btn btn-sm btn-outline-danger" onclick="deleteReview('<%= review.id %>')"><%= __('review_detail.delete') %></button>
                 </div>
               <% } %>
             </div>
           </div>
         </div>
 
-        <h3 class="mb-3">Comments</h3>
+        <h3 class="mb-3"><%= __('review_detail.comments') %></h3>
         
         <% if (user) { %>
           <div class="card mb-4">
             <div class="card-body">
               <form id="comment-form">
                 <div class="mb-3">
-                  <label for="comment" class="form-label">Add a comment</label>
+                  <label for="comment" class="form-label"><%= __('review_detail.add_comment') %></label>
                   <textarea class="form-control" id="comment" rows="3" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary"><%= __('review_detail.submit_comment') %></button>
               </form>
             </div>
           </div>
         <% } else { %>
           <div class="alert alert-info mb-4">
-            <a href="/login">Login</a> or <a href="/signup">Sign up</a> to leave a comment.
+            <a href="/login"><%= __('home.login') %></a> <%= __('review_detail.login_signup').split(' or ')[0] %> <a href="/signup"><%= __('home.signup') %></a> <%= __('review_detail.login_signup').split(' or ')[1] %>
           </div>
         <% } %>
 
@@ -67,7 +98,7 @@
                   <p class="card-text"><%= comment.content %></p>
                   <div class="d-flex justify-content-between align-items-center">
                     <small class="text-muted">By <%= comment.username %> on <%= new Date(comment.createdAt).toLocaleDateString() %></small>
-                    <% if (user && user.id === comment.userId) { %>
+                    <% if (user && (user.id === comment.userId || user.role === 'Admin')) { %>
                       <div>
                         <button class="btn btn-sm btn-outline-primary me-2" onclick="editComment('<%= comment.id %>')">Edit</button>
                         <button class="btn btn-sm btn-outline-danger" onclick="deleteComment('<%= comment.id %>')">Delete</button>
@@ -78,7 +109,7 @@
               </div>
             <% }) %>
           <% } else { %>
-            <p>No comments yet. Be the first to share your thoughts!</p>
+            <p><%= __('review_detail.no_comments') %></p>
           <% } %>
         </div>
       </div>
@@ -86,7 +117,7 @@
       <div class="col-lg-4">
         <div class="card mb-4">
           <div class="card-header">
-            <h5>More from this category</h5>
+            <h5><%= __('review_detail.more_from_category') %></h5>
           </div>
           <ul class="list-group list-group-flush" id="related-reviews">
             <!-- Will be populated by JavaScript -->
@@ -127,7 +158,7 @@
         } else {
           const li = document.createElement('li');
           li.className = 'list-group-item';
-          li.textContent = 'No related reviews found.';
+          li.textContent = '<%= __('review_detail.no_related_reviews') %>';
           container.appendChild(li);
         }
       });
@@ -170,7 +201,7 @@
             </div>
           `;
           
-          if (commentsContainer.querySelector('p')?.textContent === 'No comments yet. Be the first to share your thoughts!') {
+          if (commentsContainer.querySelector('p')?.textContent === '<%= __('review_detail.no_comments') %>') {
             commentsContainer.innerHTML = '';
           }
           
@@ -228,7 +259,7 @@
             
             const commentsContainer = document.getElementById('comments-container');
             if (commentsContainer.children.length === 0) {
-              commentsContainer.innerHTML = '<p>No comments yet. Be the first to share your thoughts!</p>';
+              commentsContainer.innerHTML = '<p><%= __('review_detail.no_comments') %></p>';
             }
           });
         }
@@ -247,6 +278,28 @@
         }
       }
     <% } %>
+  </script>
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="Full Image">
+  </div>
+  <script>
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('active');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.getElementById('lightbox-img').src = '';
+    }
+    // Close on background click
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+      if (e.target === this) closeLightbox();
+    });
+    // Close on ESC
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
   </script>
 </body>
 </html>

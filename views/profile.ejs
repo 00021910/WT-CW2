@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Profile - IMO</title>
+  <title><%= __('profile.my_profile') %> - IMO</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <%- include('partials/navbar') %>
+  <div class="container mt-3">
+    <button class="btn btn-outline-secondary mb-3" onclick="window.history.length > 1 ? window.history.back() : window.location.href='/'">← Back</button>
+  </div>
 
   <div class="container mt-5">
     <div class="row">
@@ -22,10 +25,10 @@
             </div>
             <h3><%= user.username %></h3>
             <p class="text-muted"><%= user.email %></p>
-            <p class="text-muted">Member since <%= new Date(user.createdAt).toLocaleDateString() %></p>
-            <a href="/create-review" class="btn btn-primary">Write a Review</a>
+            <p class="text-muted"><%= __('profile.member_since') %> <%= new Date(user.createdAt).toLocaleDateString() %></p>
+            <a href="/create-review" class="btn btn-primary"><%= __('profile.write_review') %></a>
             <hr/>
-            <a href="/logout" class="btn btn-danger">Log out</a>
+            <a href="/logout" class="btn btn-danger"><%= __('profile.logout') %></a>
           </div>
         </div>
       </div>
@@ -33,10 +36,10 @@
       <div class="col-md-8">
         <ul class="nav nav-tabs mb-4" id="profileTabs" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="true">My Reviews</button>
+            <button class="nav-link active" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="true"><%= __('profile.my_reviews') %></button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">My Comments</button>
+            <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false"><%= __('profile.my_comments') %></button>
           </li>
         </ul>
         
@@ -73,7 +76,7 @@
               <% }) %>
             <% } else { %>
               <div class="alert alert-info">
-                You haven't written any reviews yet. <a href="/create-review">Write your first review</a>!
+                <%= __('profile.no_reviews') %> <a href="/create-review"><%= __('profile.write_your_first_review') %></a>!
               </div>
             <% } %>
           </div>
@@ -93,7 +96,7 @@
               <% }) %>
             <% } else { %>
               <div class="alert alert-info">
-                You haven't made any comments yet.
+                <%= __('profile.no_comments') %>
               </div>
             <% } %>
           </div>

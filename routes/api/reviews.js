@@ -2,10 +2,44 @@ const express = require("express")
 const router = express.Router()
 const fs = require("fs")
 const path = require("path")
-const requireAuth = require("../../middleware/auth")
+const multer = require("multer")
+const { requireAuth } = require("../../middleware/auth")
 
 const reviewsFile = path.join(__dirname, "../../data/reviews.json")
 const commentsFile = path.join(__dirname, "../../data/comments.json")
+const uploadDir = path.join(__dirname, "../../public/uploads")
+
+// Multer setup
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadDir)
+  },
+  filename: function (req, file, cb) {
+    const now = new Date();
+    const pad = n => n.toString().padStart(2, '0');
+    const dateStr =
+      now.getFullYear().toString() +
+      pad(now.getMonth() + 1) +
+      pad(now.getDate()) + '-' +
+      pad(now.getHours()) +
+      pad(now.getMinutes()) +
+      pad(now.getSeconds());
+    // Sanitize original filename (remove spaces and special chars except dot and underscore)
+    const original = file.originalname.replace(/[^a-zA-Z0-9._-]/g, '');
+    cb(null, `${dateStr}_${original}`);
+  }
+})
+const upload = multer({
+  storage: storage,
+  limits: { files: 3 },
+  fileFilter: function (req, file, cb) {
+    // Accept images only
+    if (!file.mimetype.startsWith('image/')) {
+      return cb(new Error('Only image files are allowed!'), false)
+    }
+    cb(null, true)
+  }
+})
 
 // Helper function to generate 9-digit ID
 function generateId() {
@@ -97,9 +131,14 @@ router.get("/:id", (req, res) => {
 })
 
 // Create a new review
-router.post("/", requireAuth, (req, res) => {
-  const { title, content, productName, category, rating } = req.body
+router.post("/", requireAuth, upload.array('images', 3), (req, res) => {
+  const { title, content, productName, category, rating, language } = req.body
   const reviews = loadReviews()
+
+  let images = []
+  if (req.files && req.files.length > 0) {
+    images = req.files.map(file => `/uploads/${file.filename}`)
+  }
 
   const newReview = {
     id: generateId(),
@@ -112,6 +151,8 @@ router.post("/", requireAuth, (req, res) => {
     username: req.user.username,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
+    images,
+    language: language || null,
   }
 
   reviews.push(newReview)
@@ -151,29 +192,29 @@ router.put("/:id", requireAuth, (req, res) => {
 })
 
 // Delete a review
-router.delete("/:id", requireAuth, (req, res) => {
-  const reviews = loadReviews()
-  const reviewIndex = reviews.findIndex((r) => r.id === req.params.id)
+router.delete('/:id', requireAuth, (req, res) => {
+  const reviews = loadReviews();
+  const reviewIndex = reviews.findIndex((r) => r.id === req.params.id);
 
   if (reviewIndex === -1) {
-    return res.status(404).json({ error: "Review not found" })
+    return res.status(404).json({ error: 'Review not found' });
   }
 
-  // Check if the user is the owner of the review
-  if (reviews[reviewIndex].userId !== req.user.id) {
-    return res.status(403).json({ error: "Not authorized to delete this review" })
+  // Allow admin to delete any review
+  if (reviews[reviewIndex].userId !== req.user.id && req.user.role !== 'Admin') {
+    return res.status(403).json({ error: 'Not authorized to delete this review' });
   }
 
   // Remove the review
-  const deletedReview = reviews.splice(reviewIndex, 1)[0]
-  saveReviews(reviews)
+  const deletedReview = reviews.splice(reviewIndex, 1)[0];
+  saveReviews(reviews);
 
   // Also delete all comments associated with this review
-  const comments = loadComments()
-  const updatedComments = comments.filter((c) => c.reviewId !== req.params.id)
-  fs.writeFileSync(commentsFile, JSON.stringify(updatedComments, null, 2))
+  const comments = loadComments();
+  const updatedComments = comments.filter((c) => c.reviewId !== req.params.id);
+  fs.writeFileSync(commentsFile, JSON.stringify(updatedComments, null, 2));
 
-  res.json({ message: "Review deleted successfully", review: deletedReview })
-})
+  res.json({ message: 'Review deleted successfully', review: deletedReview });
+});
 
 module.exports = router

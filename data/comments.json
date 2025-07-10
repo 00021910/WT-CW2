@@ -90,15 +90,6 @@
     "updatedAt": "2025-04-19T17:45:00.000Z"
   },
   {
-    "id": "261931296",
-    "content": "bruh",
-    "reviewId": "345678901",
-    "userId": "125043598",
-    "username": "a_zeez",
-    "createdAt": "2025-04-08T18:15:10.284Z",
-    "updatedAt": "2025-04-08T18:15:10.285Z"
-  },
-  {
     "id": "270407369",
     "content": "come on",
     "reviewId": "345678901",
@@ -106,5 +97,32 @@
     "username": "a_zeez",
     "createdAt": "2025-04-08T18:15:12.568Z",
     "updatedAt": "2025-04-08T18:15:12.570Z"
+  },
+  {
+    "id": "768937369",
+    "content": "I feel like you are just fanboying yamaha",
+    "reviewId": "911457082",
+    "userId": "437394816",
+    "username": "iamadhambek",
+    "createdAt": "2025-07-10T14:26:45.174Z",
+    "updatedAt": "2025-07-10T14:26:45.174Z"
+  },
+  {
+    "id": "337158758",
+    "content": "I feel like you are quite biased",
+    "reviewId": "428910636",
+    "userId": "125043598",
+    "username": "a_zeez",
+    "createdAt": "2025-07-10T14:27:19.940Z",
+    "updatedAt": "2025-07-10T14:27:19.940Z"
+  },
+  {
+    "id": "480269218",
+    "content": "Nope, I just love the retro sounds it provides. I've grown up with those sounds so it means a lot to me. Sentimental in a sense",
+    "reviewId": "911457082",
+    "userId": "125043598",
+    "username": "a_zeez",
+    "createdAt": "2025-07-10T14:27:53.019Z",
+    "updatedAt": "2025-07-10T14:27:53.020Z"
   }
 ]

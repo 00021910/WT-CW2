@@ -6,6 +6,7 @@
     "build": "node index.js"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "bcryptjs": "latest",
     "body-parser": "latest",
     "bootstrap": "latest",
@@ -14,6 +15,7 @@
     "ejs": "^3.1.10",
     "express": "latest",
     "i18n": "latest",
+    "multer": "^2.0.1",
     "nodemon": "^3.1.9"
   },
   "description": "A platform for product reviews and discussions",

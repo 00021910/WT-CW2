@@ -9,9 +9,11 @@ const path = require("path")
 const mainRoutes = require("./routes/main")
 const authRoutes = require("./routes/authroute")
 const apiRoutes = require("./routes/api/entry")
+const adminRoutes = require('./routes/admin');
+const { loadUser } = require("./middleware/auth")
 
 const app = express()
-const PORT = process.env.PORT || 7070
+const PORT = process.env.PORT || 3000
 
 // setting up the languages we will be using for the app
 i18n.configure({
@@ -31,9 +33,13 @@ app.use(express.static(path.join(__dirname, "public")))
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
 
+// Load user data for all routes
+app.use(loadUser)
+
 app.use("/", authRoutes)
 app.use("/", mainRoutes)
 app.use("/api", apiRoutes)
+app.use('/admin', adminRoutes);
 
 app.listen(PORT, () => {
   console.log(`IMO app running at http://localhost:${PORT}`)

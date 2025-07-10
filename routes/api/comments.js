@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const fs = require("fs")
 const path = require("path")
-const requireAuth = require("../../middleware/auth")
+const { requireAuth } = require("../../middleware/auth")
 
 const commentsFile = path.join(__dirname, "../../data/comments.json")
 const reviewsFile = path.join(__dirname, "../../data/reviews.json")
@@ -97,24 +97,24 @@ router.put("/:id", requireAuth, (req, res) => {
 })
 
 // Delete a comment
-router.delete("/:id", requireAuth, (req, res) => {
-  const comments = loadComments()
-  const commentIndex = comments.findIndex((c) => c.id === req.params.id)
+router.delete('/:id', requireAuth, (req, res) => {
+  const comments = loadComments();
+  const commentIndex = comments.findIndex((c) => c.id === req.params.id);
 
   if (commentIndex === -1) {
-    return res.status(404).json({ error: "Comment not found" })
+    return res.status(404).json({ error: 'Comment not found' });
   }
 
-  // Check if the user is the owner of the comment
-  if (comments[commentIndex].userId !== req.user.id) {
-    return res.status(403).json({ error: "Not authorized to delete this comment" })
+  // Allow admin to delete any comment
+  if (comments[commentIndex].userId !== req.user.id && req.user.role !== 'Admin') {
+    return res.status(403).json({ error: 'Not authorized to delete this comment' });
   }
 
   // Remove the comment
-  const deletedComment = comments.splice(commentIndex, 1)[0]
-  saveComments(comments)
+  const deletedComment = comments.splice(commentIndex, 1)[0];
+  saveComments(comments);
 
-  res.json({ message: "Comment deleted successfully", comment: deletedComment })
-})
+  res.json({ message: 'Comment deleted successfully', comment: deletedComment });
+});
 
 module.exports = router

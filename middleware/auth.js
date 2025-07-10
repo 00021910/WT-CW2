@@ -9,6 +9,21 @@ function loadUsers() {
   return JSON.parse(data)
 }
 
+// Middleware to load user data for all routes (non-protected)
+function loadUser(req, res, next) {
+  const { userId } = req.cookies
+
+  if (userId) {
+    const users = loadUsers()
+    const user = users.find((u) => u.id === userId)
+    if (user) {
+      req.user = user
+    }
+  }
+
+  next()
+}
+
 // Middleware to protect routes and redirect if a user is not authenticated
 function requireAuth(req, res, next) {
   const { userId } = req.cookies
@@ -29,4 +44,4 @@ function requireAuth(req, res, next) {
   next()
 }
 
-module.exports = requireAuth
+module.exports = { requireAuth, loadUser }

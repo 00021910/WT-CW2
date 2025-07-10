@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const fs = require("fs")
 const path = require("path")
-const requireAuth = require("../middleware/auth")
+const { requireAuth } = require("../middleware/auth")
 
 const reviewsFile = path.join(__dirname, "../data/reviews.json")
 const commentsFile = path.join(__dirname, "../data/comments.json")
@@ -28,32 +28,37 @@ function loadComments() {
 
 // Home page - accessible to all
 router.get("/", (req, res) => {
-  const reviews = loadReviews()
-
-  // Sort by popularity (most commented)
-  const comments = loadComments()
-  const reviewCounts = {}
-
-  comments.forEach((comment) => {
-    if (reviewCounts[comment.reviewId]) {
-      reviewCounts[comment.reviewId]++
-    } else {
-      reviewCounts[comment.reviewId] = 1
-    }
-  })
-
-  const popularReviews = [...reviews]
-    .sort((a, b) => {
-      const countA = reviewCounts[a.id] || 0
-      const countB = reviewCounts[b.id] || 0
-      return countB - countA
+  try {
+    const reviews = loadReviews()
+    // Sort by popularity (most commented)
+    const comments = loadComments()
+    const reviewCounts = {}
+    comments.forEach((comment) => {
+      if (reviewCounts[comment.reviewId]) {
+        reviewCounts[comment.reviewId]++
+      } else {
+        reviewCounts[comment.reviewId] = 1
+      }
     })
-    .slice(0, 10)
-
-  res.render("home", {
-    user: req.cookies.userId ? req.user || req.cookies.userId : null,
-    popularReviews,
-  })
+    const popularReviews = [...reviews]
+      .sort((a, b) => {
+        const countA = reviewCounts[a.id] || 0
+        const countB = reviewCounts[b.id] || 0
+        return countB - countA
+      })
+      .slice(0, 10)
+    res.render("home", {
+      user: req.user || null,
+      popularReviews,
+      locale: req.getLocale(),
+    })
+  } catch (err) {
+    res.status(500).render("error", {
+      message: err.message || "An unexpected error occurred.",
+      user: req.user || null,
+      error: err
+    })
+  }
 })
 
 // Search page
@@ -90,15 +95,20 @@ router.get("/search", (req, res) => {
       filteredReviews = filteredReviews.filter((review) => review.rating === 3)
     }
   }
+  
+  if (req.query.language) {
+    filteredReviews = filteredReviews.filter((review) => review.language === req.query.language)
+  }
 
   // Get unique categories for filter dropdown
   const categories = [...new Set(reviews.map((review) => review.category))]
 
   res.render("search", {
-    user: req.cookies.userId ? ( req.user || req.cookies.userId ) : null,
+    user: req.user || null,
     reviews: filteredReviews,
     categories,
     query: req.query,
+    locale: req.getLocale(),
   })
 })
 
@@ -110,7 +120,7 @@ router.get("/reviews/:id", (req, res) => {
   if (!review) {
     return res.status(404).render("error", {
       message: "Review not found",
-      user: req.cookies.userId ? req.user : null,
+      user: req.user || null,
     })
   }
 
@@ -118,9 +128,10 @@ router.get("/reviews/:id", (req, res) => {
   const reviewComments = comments.filter((c) => c.reviewId === req.params.id)
 
   res.render("review-detail", {
-    user: req.cookies.userId ? ( req.user || req.cookies.userId ) : null,
+    user: req.user || null,
     review,
     comments: reviewComments,
+    locale: req.getLocale(),
   })
 })
 
@@ -133,6 +144,7 @@ router.get("/create-review", requireAuth, (req, res) => {
   res.render("create-review", {
     user: req.user,
     categories,
+    locale: req.getLocale(),
   })
 })
 
@@ -144,7 +156,7 @@ router.get("/edit-review/:id", requireAuth, (req, res) => {
   if (!review) {
     return res.status(404).render("error", {
       message: "Review not found",
-      user: req.cookies.userId ? ( req.user || req.cookies.userId ) : null,
+      user: req.user || null,
     })
   }
 
@@ -152,7 +164,7 @@ router.get("/edit-review/:id", requireAuth, (req, res) => {
   if (review.userId !== req.user.id) {
     return res.status(403).render("error", {
       message: "Not authorized to edit this review",
-      user: req.cookies.userId ? ( req.user || req.cookies.userId ) : null
+      user: req.user || null
     })
   }
 
@@ -160,9 +172,10 @@ router.get("/edit-review/:id", requireAuth, (req, res) => {
   const categories = [...new Set(reviews.map((review) => review.category))]
 
   res.render("edit-review", {
-    user: req.cookies.userId ? ( req.user || req.cookies.userId ) : null,
+    user: req.user || null,
     review,
     categories,
+    locale: req.getLocale(),
   })
 })
 
@@ -175,9 +188,10 @@ router.get("/profile", requireAuth, (req, res) => {
   const userComments = comments.filter((c) => c.userId === req.user.id)
 
   res.render("profile", {
-    user: req.cookies.userId ? ( req.user || req.cookies.userId ) : null,
+    user: req.user || null,
     reviews: userReviews,
     comments: userComments,
+    locale: req.getLocale(),
   })
 })
 

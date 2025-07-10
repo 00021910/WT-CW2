@@ -7,22 +7,41 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link" href="/">Home</a>
+          <a class="nav-link" href="/"><%= __('navbar.home') %></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/search">Search</a>
+          <a class="nav-link" href="/search"><%= __('navbar.search') %></a>
         </li>
       </ul>
       <ul class="navbar-nav">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Profile Dashboard
+              <%= __('navbar.profile_dashboard') %>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="/profile">My Profile</a></li>
+              <li><a class="dropdown-item" href="/profile"><%= __('navbar.my_profile') %></a></li>
+              <% if (typeof user !== 'undefined' && user && user.role === 'Admin') { %>
+                <li><a class="dropdown-item" href="/admin"><%= __('navbar.admin_page') %></a></li>
+              <% } %>
+            </ul>
+          </li>
+          <li class="nav-item dropdown ms-2">
+            <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <% if (locale === 'uz') { %><%= __('navbar.language.uz') %><% } else if (locale === 'ru') { %><%= __('navbar.language.ru') %><% } else { %><%= __('navbar.language.en') %><% } %>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
+              <li><a class="dropdown-item" href="#" onclick="setLocale('uz')"><%= __('navbar.language.uz') %></a></li>
+              <li><a class="dropdown-item" href="#" onclick="setLocale('ru')"><%= __('navbar.language.ru') %></a></li>
+              <li><a class="dropdown-item" href="#" onclick="setLocale('en')"><%= __('navbar.language.en') %></a></li>
             </ul>
           </li>
       </ul>
     </div>
   </div>
 </nav>
+<script>
+  function setLocale(locale) {
+    document.cookie = 'imo-locale=' + locale + ';path=/';
+    window.location.reload();
+  }
+</script>

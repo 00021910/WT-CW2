@@ -15,21 +15,21 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">
-            <h3>Edit Review</h3>
+            <h3><%= __('edit_review.title') %></h3>
           </div>
           <div class="card-body">
             <form id="edit-review-form">
               <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
+                <label for="title" class="form-label"><%= __('create_review.review_title') %></label>
                 <input type="text" class="form-control" id="title" name="title" value="<%= review.title %>" required>
               </div>
               <div class="mb-3">
-                <label for="productName" class="form-label">Product/Place Name</label>
+                <label for="productName" class="form-label"><%= __('create_review.product_name') %></label>
                 <input type="text" class="form-control" id="productName" name="productName" value="<%= review.productName %>" required>
               </div>
               <div class="row mb-3">
                 <div class="col-md-6">
-                  <label for="category" class="form-label">Category</label>
+                  <label for="category" class="form-label"><%= __('create_review.category') %></label>
                   <select class="form-select" id="category" name="category" required>
                     <% if (categories && categories.length > 0) { %>
                       <% categories.forEach(category => { %>
@@ -42,6 +42,8 @@
                     <option value="Restaurants" <%= review.category === 'Restaurants' ? 'selected' : '' %>>Restaurants</option>
                     <option value="Hotels" <%= review.category === 'Hotels' ? 'selected' : '' %>>Hotels</option>
                     <option value="Entertainment" <%= review.category === 'Entertainment' ? 'selected' : '' %>>Entertainment</option>
+                    <option value="Movies" <%= review.category === 'Movies' ? 'selected' : '' %>>Movies</option>
+                    <option value="Series" <%= review.category === 'Series' ? 'selected' : '' %>>Series</option>
                     <option value="Books" <%= review.category === 'Books' ? 'selected' : '' %>>Books</option>
                     <option value="Fitness" <%= review.category === 'Fitness' ? 'selected' : '' %>>Fitness</option>
                     <option value="Footwear" <%= review.category === 'Footwear' ? 'selected' : '' %>>Footwear</option>
@@ -49,23 +51,38 @@
                   </select>
                 </div>
                 <div class="col-md-6">
-                  <label for="rating" class="form-label">Rating</label>
+                  <label for="rating" class="form-label"><%= __('create_review.rating') %></label>
                   <select class="form-select" id="rating" name="rating" required>
-                    <option value="5" <%= review.rating === 5 ? 'selected' : '' %>>5 - Excellent</option>
-                    <option value="4" <%= review.rating === 4 ? 'selected' : '' %>>4 - Good</option>
-                    <option value="3" <%= review.rating === 3 ? 'selected' : '' %>>3 - Average</option>
-                    <option value="2" <%= review.rating === 2 ? 'selected' : '' %>>2 - Poor</option>
-                    <option value="1" <%= review.rating === 1 ? 'selected' : '' %>>1 - Terrible</option>
+                    <option value="5" <%= review.rating === 5 ? 'selected' : '' %>><%= __('create_review.5_excellent') %></option>
+                    <option value="4" <%= review.rating === 4 ? 'selected' : '' %>><%= __('create_review.4_good') %></option>
+                    <option value="3" <%= review.rating === 3 ? 'selected' : '' %>><%= __('create_review.3_average') %></option>
+                    <option value="2" <%= review.rating === 2 ? 'selected' : '' %>><%= __('create_review.2_poor') %></option>
+                    <option value="1" <%= review.rating === 1 ? 'selected' : '' %>><%= __('create_review.1_terrible') %></option>
                   </select>
                 </div>
               </div>
               <div class="mb-3">
-                <label for="content" class="form-label">Review Content</label>
+                <label for="content" class="form-label"><%= __('create_review.content') %></label>
                 <textarea class="form-control" id="content" name="content" rows="6" required><%= review.content %></textarea>
               </div>
+              <div class="mb-3">
+                <label for="language" class="form-label"><%= __('create_review.language') %></label>
+                <select class="form-select" id="language" name="language">
+                  <option value="" <%= !review.language ? 'selected' : '' %>><%= __('create_review.select_language') %></option>
+                  <option value="English" <%= review.language === 'English' ? 'selected' : '' %>>English</option>
+                  <option value="Uzbek" <%= review.language === 'Uzbek' ? 'selected' : '' %>>Uzbek</option>
+                  <option value="Russian" <%= review.language === 'Russian' ? 'selected' : '' %>>Russian</option>
+                  <option value="Spanish" <%= review.language === 'Spanish' ? 'selected' : '' %>>Spanish</option>
+                  <option value="French" <%= review.language === 'French' ? 'selected' : '' %>>French</option>
+                  <option value="German" <%= review.language === 'German' ? 'selected' : '' %>>German</option>
+                  <option value="Chinese" <%= review.language === 'Chinese' ? 'selected' : '' %>>Chinese</option>
+                  <option value="Japanese" <%= review.language === 'Japanese' ? 'selected' : '' %>>Japanese</option>
+                  <option value="Other" <%= review.language === 'Other' ? 'selected' : '' %>>Other</option>
+                </select>
+              </div>
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <a href="/reviews/<%= review.id %>" class="btn btn-secondary me-md-2">Cancel</a>
-                <button type="submit" class="btn btn-primary">Update Review</button>
+                <a href="/reviews/<%= review.id %>" class="btn btn-secondary me-md-2"><%= __('edit_review.cancel') %></a>
+                <button type="submit" class="btn btn-primary"><%= __('edit_review.update') %></button>
               </div>
             </form>
           </div>
