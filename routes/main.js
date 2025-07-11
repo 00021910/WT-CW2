@@ -47,10 +47,28 @@ router.get("/", (req, res) => {
         return countB - countA
       })
       .slice(0, 10)
+
+    // Define categories with keys, localized names, and image filenames
+    const categoryList = [
+      { key: 'electronics', name: req.__("category.electronics"), image: '/images/categories/electronics.jpg' },
+      { key: 'home_appliances', name: req.__("category.home_appliances"), image: '/images/categories/home_appliances.jpg' },
+      { key: 'kitchen_appliances', name: req.__("category.kitchen_appliances"), image: '/images/categories/kitchen_appliances.jpg' },
+      { key: 'restaurants', name: req.__("category.restaurants"), image: '/images/categories/restaurants.jpg' },
+      { key: 'hotels', name: req.__("category.hotels"), image: '/images/categories/hotels.jpg' },
+      { key: 'entertainment', name: req.__("category.entertainment"), image: '/images/categories/entertainment.jpg' },
+      { key: 'movies', name: req.__("category.movies"), image: '/images/categories/movies.jpg' },
+      { key: 'series', name: req.__("category.series"), image: '/images/categories/series.jpg' },
+      { key: 'books', name: req.__("category.books"), image: '/images/categories/books.jpg' },
+      { key: 'fitness', name: req.__("category.fitness"), image: '/images/categories/fitness.jpg' },
+      { key: 'footwear', name: req.__("category.footwear"), image: '/images/categories/footwear.jpg' },
+      { key: 'other', name: req.__("category.other"), image: '/images/categories/other.jpg' },
+    ]
+
     res.render("home", {
       user: req.user || null,
       popularReviews,
       locale: req.getLocale(),
+      categories: categoryList,
     })
   } catch (err) {
     res.status(500).render("error", {
@@ -83,7 +101,7 @@ router.get("/search", (req, res) => {
   }
 
   if (req.query.category) {
-    filteredReviews = filteredReviews.filter((review) => review.category === req.query.category)
+    filteredReviews = filteredReviews.filter((review) => review.category.replace(/\s+/g, '_').toLowerCase() === req.query.category)
   }
 
   if (req.query.sentiment) {
@@ -100,13 +118,26 @@ router.get("/search", (req, res) => {
     filteredReviews = filteredReviews.filter((review) => review.language === req.query.language)
   }
 
-  // Get unique categories for filter dropdown
-  const categories = [...new Set(reviews.map((review) => review.category))]
+  // Use the full category list for filter dropdown
+  const categoryList = [
+    { key: 'electronics', name: req.__("category.electronics") },
+    { key: 'home_appliances', name: req.__("category.home_appliances") },
+    { key: 'kitchen_appliances', name: req.__("category.kitchen_appliances") },
+    { key: 'restaurants', name: req.__("category.restaurants") },
+    { key: 'hotels', name: req.__("category.hotels") },
+    { key: 'entertainment', name: req.__("category.entertainment") },
+    { key: 'movies', name: req.__("category.movies") },
+    { key: 'series', name: req.__("category.series") },
+    { key: 'books', name: req.__("category.books") },
+    { key: 'fitness', name: req.__("category.fitness") },
+    { key: 'footwear', name: req.__("category.footwear") },
+    { key: 'other', name: req.__("category.other") },
+  ]
 
   res.render("search", {
     user: req.user || null,
     reviews: filteredReviews,
-    categories,
+    categories: categoryList,
     query: req.query,
     locale: req.getLocale(),
   })
@@ -191,6 +222,40 @@ router.get("/profile", requireAuth, (req, res) => {
     user: req.user || null,
     reviews: userReviews,
     comments: userComments,
+    locale: req.getLocale(),
+  })
+})
+
+// Category page - list all posts in a category
+router.get("/category/:categoryKey", (req, res) => {
+  const categoryKey = req.params.categoryKey
+  // Define categories as in the homepage
+  const categoryList = [
+    { key: 'electronics', name: req.__("category.electronics"), image: '/images/categories/electronics.jpg' },
+    { key: 'home_appliances', name: req.__("category.home_appliances"), image: '/images/categories/home_appliances.jpg' },
+    { key: 'kitchen_appliances', name: req.__("category.kitchen_appliances"), image: '/images/categories/kitchen_appliances.jpg' },
+    { key: 'restaurants', name: req.__("category.restaurants"), image: '/images/categories/restaurants.jpg' },
+    { key: 'hotels', name: req.__("category.hotels"), image: '/images/categories/hotels.jpg' },
+    { key: 'entertainment', name: req.__("category.entertainment"), image: '/images/categories/entertainment.jpg' },
+    { key: 'movies', name: req.__("category.movies"), image: '/images/categories/movies.jpg' },
+    { key: 'series', name: req.__("category.series"), image: '/images/categories/series.jpg' },
+    { key: 'books', name: req.__("category.books"), image: '/images/categories/books.jpg' },
+    { key: 'fitness', name: req.__("category.fitness"), image: '/images/categories/fitness.jpg' },
+    { key: 'footwear', name: req.__("category.footwear"), image: '/images/categories/footwear.jpg' },
+    { key: 'other', name: req.__("category.other"), image: '/images/categories/other.jpg' },
+  ]
+  const category = categoryList.find(cat => cat.key === categoryKey)
+  if (!category) {
+    return res.status(404).render("error", {
+      message: req.__("Category not found"),
+      user: req.user || null,
+    })
+  }
+  const reviews = loadReviews().filter(r => r.category.replace(/\s+/g, '_').toLowerCase() === categoryKey)
+  res.render("category", {
+    user: req.user || null,
+    category,
+    reviews,
     locale: req.getLocale(),
   })
 })

@@ -87,5 +87,6 @@
 	"category.fitness": "Фитнес",
 	"category.footwear": "Обувь",
 	"category.other": "Другое",
-	"navbar.admin_page": "Админ-панель"
+	"navbar.admin_page": "Админ-панель",
+	"home.popular_categories": "Популярные категории"
 }

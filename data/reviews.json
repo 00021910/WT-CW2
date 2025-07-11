@@ -10,7 +10,8 @@
     "username": "johndoe",
     "createdAt": "2025-04-10T09:30:00.000Z",
     "updatedAt": "2025-04-10T09:30:00.000Z",
-    "language": "English"
+    "language": "English",
+    "images": ["/images/placeholders/smartphone.jpg"]
   },
   {
     "id": "234567890",
@@ -23,7 +24,8 @@
     "username": "janedoe",
     "createdAt": "2025-04-12T14:15:00.000Z",
     "updatedAt": "2025-04-12T14:15:00.000Z",
-    "language": "English"
+    "language": "English",
+    "images": ["/images/placeholders/coffee_maker.jpg"]
   },
   {
     "id": "345678901",
@@ -36,7 +38,8 @@
     "username": "bobsmith",
     "createdAt": "2025-04-15T11:45:00.000Z",
     "updatedAt": "2025-04-15T11:45:00.000Z",
-    "language": "English"
+    "language": "English",
+    "images": ["/images/placeholders/running_shoes.jpg"]
   },
   {
     "id": "456789012",
@@ -49,7 +52,8 @@
     "username": "alicegreen",
     "createdAt": "2025-04-18T19:20:00.000Z",
     "updatedAt": "2025-04-18T19:20:00.000Z",
-    "language": "English"
+    "language": "English",
+    "images": ["/images/placeholders/restaurant.jpg"]
   },
   {
     "id": "567890123",
@@ -62,7 +66,8 @@
     "username": "mikebrown",
     "createdAt": "2025-04-20T10:10:00.000Z",
     "updatedAt": "2025-04-20T10:10:00.000Z",
-    "language": "English"
+    "language": "English",
+    "images": ["/images/placeholders/vacuum.jpg"]
   },
   {
     "id": "678901234",
@@ -75,7 +80,8 @@
     "username": "sarahwilson",
     "createdAt": "2025-04-22T16:30:00.000Z",
     "updatedAt": "2025-04-22T16:30:00.000Z",
-    "language": "English"
+    "language": "English",
+    "images": ["/images/placeholders/hotel.jpg"]
   },
   {
     "id": "789012345",
@@ -88,7 +94,8 @@
     "username": "davidjones",
     "createdAt": "2025-04-25T13:45:00.000Z",
     "updatedAt": "2025-04-25T13:45:00.000Z",
-    "language": "English"
+    "language": "English",
+    "images": ["/images/placeholders/laptop.jpg"]
   },
   {
     "id": "890123456",
@@ -101,7 +108,8 @@
     "username": "emilyclark",
     "createdAt": "2025-04-28T20:15:00.000Z",
     "updatedAt": "2025-04-28T20:15:00.000Z",
-    "language": "English"
+    "language": "English",
+    "images": ["/images/placeholders/movie.jpg"]
   },
   {
     "id": "901234567",
@@ -114,7 +122,8 @@
     "username": "ryanmiller",
     "createdAt": "2025-04-30T08:50:00.000Z",
     "updatedAt": "2025-04-30T08:50:00.000Z",
-    "language": "English"
+    "language": "English",
+    "images": ["/images/placeholders/book.jpg"]
   },
   {
     "id": "012345678",
@@ -127,7 +136,8 @@
     "username": "oliviawhite",
     "createdAt": "2025-05-02T15:25:00.000Z",
     "updatedAt": "2025-05-02T15:25:00.000Z",
-    "language": "English"
+    "language": "English",
+    "images": ["/images/placeholders/fitness_tracker.jpg"]
   },
   {
     "id": "911457082",

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg">
   <div class="container">
     <a class="navbar-brand" href="/">IMO</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,6 +11,26 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/search"><%= __('navbar.search') %></a>
+        </li>
+        <!-- Category Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= __('search.all_categories') %>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+            <li><a class="dropdown-item" href="/category/electronics"><%= __('category.electronics') %></a></li>
+            <li><a class="dropdown-item" href="/category/home_appliances"><%= __('category.home_appliances') %></a></li>
+            <li><a class="dropdown-item" href="/category/kitchen_appliances"><%= __('category.kitchen_appliances') %></a></li>
+            <li><a class="dropdown-item" href="/category/restaurants"><%= __('category.restaurants') %></a></li>
+            <li><a class="dropdown-item" href="/category/hotels"><%= __('category.hotels') %></a></li>
+            <li><a class="dropdown-item" href="/category/entertainment"><%= __('category.entertainment') %></a></li>
+            <li><a class="dropdown-item" href="/category/movies"><%= __('category.movies') %></a></li>
+            <li><a class="dropdown-item" href="/category/series"><%= __('category.series') %></a></li>
+            <li><a class="dropdown-item" href="/category/books"><%= __('category.books') %></a></li>
+            <li><a class="dropdown-item" href="/category/fitness"><%= __('category.fitness') %></a></li>
+            <li><a class="dropdown-item" href="/category/footwear"><%= __('category.footwear') %></a></li>
+            <li><a class="dropdown-item" href="/category/other"><%= __('category.other') %></a></li>
+          </ul>
         </li>
       </ul>
       <ul class="navbar-nav">
@@ -44,4 +64,14 @@
     document.cookie = 'imo-locale=' + locale + ';path=/';
     window.location.reload();
   }
+  
+  // Navbar scroll effect
+  window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
 </script>
